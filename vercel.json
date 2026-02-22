@@ -8,6 +8,34 @@
         {
             "source": "/dashboard.html",
             "destination": "/server.js"
+        },
+        {
+            "source": "/terminal.html",
+            "destination": "/server.js"
+        },
+        {
+            "source": "/assets/(.*)",
+            "destination": "/server.js"
+        },
+        {
+            "source": "/(.*\\.png)",
+            "destination": "/server.js"
+        },
+        {
+            "source": "/(.*\\.css)",
+            "destination": "/server.js"
+        },
+        {
+            "source": "/",
+            "destination": "/server.js"
         }
-    ]
+    ],
+    "functions": {
+        "server.js": {
+            "includeFiles": [
+                "assets/**",
+                "*.html"
+            ]
+        }
+    }
 }
