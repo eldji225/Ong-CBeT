@@ -53,30 +53,30 @@ app.post('/api/contact', async (req, res) => {
     }
 });
 
-// API: Sentinelle Charter Signup
+// API: Charte Sentinelle - Engagement
 app.post('/api/sentinelles', async (req, res) => {
     const { prenom, nom, email, telephone } = req.body;
     const date_signature = new Date().toISOString();
     try {
         const result = await sql`INSERT INTO sentinelles (prenom, nom, email, telephone, date_signature) VALUES (${prenom}, ${nom}, ${email}, ${telephone}, ${date_signature}) RETURNING id`;
-        res.json({ id: result.rows[0].id, message: "Engagement validé." });
+        res.json({ id: result.rows[0].id, message: "Engagement validé. Bienvenue, Sentinelle." });
     } catch (err) {
         res.status(500).json({ error: err.message });
     }
 });
 
-// Serve static files
+// Serve static files (index.html, assets, etc.)
 app.use(express.static(__dirname));
 
-// Default: index.html
+// Default to index.html
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'index.html'));
 });
 
-// Export for Vercel
+// Export the app for Vercel Serverless
 module.exports = app;
 
-// Listen locally
+// Listen locally if not in Vercel
 if (require.main === module) {
     app.listen(port, () => {
         console.log(`Serveur démarré sur http://localhost:${port}`);

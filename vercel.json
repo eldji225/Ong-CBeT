@@ -2,32 +2,8 @@
     "version": 2,
     "rewrites": [
         {
-            "source": "/api/(.*)",
-            "destination": "/server.js"
-        },
-        {
-            "source": "/assets/(.*)",
-            "destination": "/server.js"
-        },
-        {
-            "source": "/(.*\\.png)",
-            "destination": "/server.js"
-        },
-        {
-            "source": "/(.*\\.css)",
-            "destination": "/server.js"
-        },
-        {
-            "source": "/",
+            "source": "/(.*)",
             "destination": "/server.js"
         }
-    ],
-    "functions": {
-        "server.js": {
-            "includeFiles": [
-                "assets/**",
-                "*.html"
-            ]
-        }
-    }
+    ]
 }
