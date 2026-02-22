@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="fr" class="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Laboratoire & Qualité | CBeT</title>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Roboto+Mono:wght@400;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        'ong-dark': '#064e3b',
+                        'ong-light': '#10b981',
+                        'ong-gold': '#d97706',
+                        'lab-bg': '#052e26',
+                        'lab-card': '#0a4d3f',
+                    },
+                    fontFamily: {
+                        'mono': ['Roboto Mono', 'monospace'],
+                        'sans': ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #052e26;
+            color: #f0fdf4;
+        }
+
+        .glass-panel {
+            background: rgba(10, 77, 63, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(16, 185, 129, 0.2);
+        }
+
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #052e26;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #10b981;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+
+<body class="font-sans min-h-screen overflow-hidden flex flex-col">
+
+    <!-- Navbar -->
+    <header
+        class="bg-black/40 border-b border-ong-light/20 py-3 px-6 flex justify-between items-center backdrop-blur-md z-50">
+        <div class="flex items-center space-x-4">
+            <div class="w-10 h-10 rounded-full border border-ong-light flex items-center justify-center animate-pulse">
+                <i class="fas fa-microscope text-ong-light"></i>
+            </div>
+            <div>
+                <h1 class="font-bold text-lg tracking-widest uppercase text-white">Laboratoire Central</h1>
+                <p class="text-[10px] text-ong-light font-mono" id="lab-clock">00:00:00</p>
+            </div>
+        </div>
+        <div class="flex space-x-4">
+            <a href="terminal.html"
+                class="px-3 py-1.5 border border-white/20 rounded hover:bg-white/10 text-xs font-bold uppercase transition">
+                <i class="fas fa-satellite-dish mr-2"></i>Terminal Terrain
+            </a>
+            <a href="index.html"
+                class="px-3 py-1.5 border border-white/20 rounded hover:bg-white/10 text-xs font-bold uppercase transition">
+                <i class="fas fa-home mr-2"></i>Accueil
+            </a>
+        </div>
+    </header>
+
+    <div class="flex-grow flex overflow-hidden">
+        <!-- Sidebar -->
+        <aside class="w-64 bg-black/20 border-r border-ong-light/10 flex flex-col p-4 space-y-2">
+            <button onclick="switchTab('dashboard')" id="btn-dashboard"
+                class="sidebar-btn text-left px-4 py-3 rounded-xl bg-ong-light/20 border border-ong-light text-ong-light font-bold text-sm tracking-wide transition-all">
+                <i class="fas fa-chart-line w-6"></i> Monitoring
+            </button>
+            <button onclick="switchTab('recoltes')" id="btn-recoltes"
+                class="sidebar-btn text-left px-4 py-3 rounded-xl hover:bg-white/5 text-white/70 hover:text-white text-sm font-medium tracking-wide transition-all">
+                <i class="fas fa-leaf w-6"></i> Flux Récoltes
+            </button>
+            <button onclick="switchTab('test-form')" id="btn-test-form"
+                class="sidebar-btn text-left px-4 py-3 rounded-xl hover:bg-white/5 text-white/70 hover:text-white text-sm font-medium tracking-wide transition-all">
+                <i class="fas fa-vial w-6"></i> Saisir Test pH
+            </button>
+            <button onclick="switchTab('contacts')" id="btn-contacts"
+                class="sidebar-btn text-left px-4 py-3 rounded-xl hover:bg-white/5 text-white/70 hover:text-white text-sm font-medium tracking-wide transition-all mt-auto border-t border-white/10 pt-4">
+                <i class="fas fa-envelope w-6"></i> Messages Externes
+            </button>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main
+            class="flex-grow p-6 overflow-y-auto relative bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMCIgaGVpZ2h0PSIyMCI+CiAgPHBhdGggZD0iTTAgMjBWMGgyMHYyMEgwem0xOS0xOVYxaC0ydjE4aDJ6TTIgMXYxOGgyVjFIMnptMTYgMHYxOGgyVjFIMTh6IiBmaWxsPSIjMTBiOTgxIiBmaWxsLW9wYWNpdHk9IjAuMDIiLz4KPC9zdmc+')]">
+
+            <!-- Views -->
+
+            <!-- Dashboard View -->
+            <div id="view-dashboard" class="space-y-6">
+                <!-- KPI Row -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="glass-panel p-6 rounded-2xl flex items-center justify-between">
+                        <div>
+                            <p class="text-[10px] text-white/50 uppercase font-black tracking-widest mb-1">Lots en
+                                Macération</p>
+                            <h2 class="text-3xl font-bold font-mono text-ong-light">4</h2>
+                        </div>
+                        <i class="fas fa-vials text-3xl opacity-20"></i>
+                    </div>
+                    <div class="glass-panel p-6 rounded-2xl flex items-center justify-between">
+                        <div>
+                            <p class="text-[10px] text-white/50 uppercase font-black tracking-widest mb-1">Moyenne pH
+                                (Lot Actif)</p>
+                            <h2 class="text-3xl font-bold font-mono text-ong-gold" id="kpi-ph">--</h2>
+                        </div>
+                        <i class="fas fa-droplet text-3xl opacity-20 text-ong-gold"></i>
+                    </div>
+                    <div class="glass-panel p-6 rounded-2xl flex items-center justify-between">
+                        <div>
+                            <p class="text-[10px] text-white/50 uppercase font-black tracking-widest mb-1">Sentinelles
+                                Actives</p>
+                            <h2 class="text-3xl font-bold font-mono" id="kpi-sentinelles">--</h2>
+                        </div>
+                        <i class="fas fa-users text-3xl opacity-20"></i>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <!-- Chart pH -->
+                    <div class="glass-panel p-6 rounded-2xl flex flex-col h-96">
+                        <h3
+                            class="font-bold text-sm uppercase tracking-widest mb-4 border-b border-white/10 pb-2 flex justify-between">
+                            <span>Cinétique pH (7 Jours)</span>
+                            <span class="text-[10px] text-ong-light bg-ong-light/20 px-2 py-1 rounded">Lot:
+                                L-042B</span>
+                        </h3>
+                        <div class="flex-grow relative w-full h-full">
+                            <canvas id="phChart"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- Activité Récents -->
+                    <div class="glass-panel p-6 rounded-2xl h-96 overflow-hidden flex flex-col">
+                        <h3 class="font-bold text-sm uppercase tracking-widest mb-4 border-b border-white/10 pb-2">
+                            Activité Sentinelles Récente</h3>
+                        <div class="overflow-y-auto pr-2 space-y-4 font-mono text-xs flex-grow"
+                            id="recent-activity-feed">
+                            <!-- Populated from API -->
+                            <div class="text-center text-white/30 pt-10">Chargement...</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recoltes View -->
+            <div id="view-recoltes" class="hidden h-full flex flex-col space-y-4">
+                <div class="flex justify-between items-center mb-2">
+                    <h3 class="font-bold text-xl uppercase tracking-widest">Flux de Traçabilité</h3>
+                    <button onclick="loadRecoltes()"
+                        class="px-3 py-1 bg-white/10 hover:bg-white/20 rounded text-xs font-bold uppercase transition"><i
+                            class="fas fa-sync-alt mr-2"></i>Actualiser</button>
+                </div>
+                <div class="glass-panel rounded-2xl flex-grow overflow-hidden flex flex-col">
+                    <div
+                        class="grid grid-cols-6 p-4 bg-black/40 border-b border-white/10 text-[10px] font-black uppercase tracking-widest text-white/50">
+                        <div class="col-span-1">Date</div>
+                        <div class="col-span-1">Sentinelle</div>
+                        <div class="col-span-2">Plante</div>
+                        <div class="col-span-1">GPS</div>
+                        <div class="col-span-1 text-right">État</div>
+                    </div>
+                    <div class="overflow-y-auto font-mono text-xs" id="recoltes-list">
+                        <!-- rows here -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Saisir Test Lab -->
+            <div id="view-test-form" class="hidden h-full">
+                <h3 class="font-bold text-xl uppercase tracking-widest mb-6">Protocole de Mesure pH & T°</h3>
+
+                <form id="labTestForm" class="max-w-2xl glass-panel p-8 rounded-2xl space-y-6">
+                    <div class="grid grid-cols-2 gap-6">
+                        <div class="space-y-2">
+                            <label class="text-[10px] text-white/50 uppercase font-black tracking-widest">Numéro de
+                                Lot</label>
+                            <input type="text" name="lot_id" value="L-042B" required
+                                class="w-full bg-black/30 border border-white/20 p-3 rounded font-mono text-sm outline-none focus:border-ong-light">
+                        </div>
+                        <div class="space-y-2">
+                            <label
+                                class="text-[10px] text-white/50 uppercase font-black tracking-widest">Technicien</label>
+                            <input type="text" name="technicien" required
+                                class="w-full bg-black/30 border border-white/20 p-3 rounded font-mono text-sm outline-none focus:border-ong-light">
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-3 gap-6">
+                        <div class="space-y-2">
+                            <label class="text-[10px] text-white/50 uppercase font-black tracking-widest">Jour
+                                Macération (1-7)</label>
+                            <input type="number" min="1" max="7" name="jour_maceration" required
+                                class="w-full bg-black/30 border border-white/20 p-3 rounded font-mono text-sm text-center outline-none focus:border-ong-light">
+                        </div>
+                        <div class="space-y-2">
+                            <label class="text-[10px] text-white/50 uppercase font-black tracking-widest">pH
+                                Stabilité</label>
+                            <input type="number" step="0.01" name="ph_value" required
+                                class="w-full bg-black/30 border border-white/20 p-3 rounded font-mono text-sm text-center outline-none focus:border-ong-light">
+                        </div>
+                        <div class="space-y-2">
+                            <label class="text-[10px] text-white/50 uppercase font-black tracking-widest">Température
+                                (°C)</label>
+                            <input type="number" step="0.1" name="temperature" required
+                                class="w-full bg-black/30 border border-white/20 p-3 rounded font-mono text-sm text-center outline-none focus:border-ong-light">
+                        </div>
+                    </div>
+
+                    <p class="text-xs text-ong-gold/80 italic border-l-2 border-ong-gold pl-3 py-1">"La traçabilité de
+                        chaque paramètre garantit la pureté et l'efficacité de l'essence de blindage symbiotique."</p>
+
+                    <button type="submit" id="btnSubmitTest"
+                        class="w-full bg-ong-light text-black font-bold uppercase tracking-widest py-4 rounded hover:bg-white transition flex justify-center items-center space-x-2">
+                        <i class="fas fa-save"></i> <span>Archiver dans le Registre</span>
+                    </button>
+                </form>
+            </div>
+
+        </main>
+    </div>
+
+    <script>
+        // Clock
+        setInterval(() => {
+            const date = new Date();
+            document.getElementById('lab-clock').textContent = date.toLocaleTimeString('fr-FR', { hour12: false, hour: '2-digit', minute: '2-digit', second: '2-digit' }) + ' GMT';
+        }, 1000);
+
+        // Sidebar Navigation
+        function switchTab(tabId) {
+            document.querySelectorAll('main > div').forEach(el => el.classList.add('hidden'));
+            document.getElementById(`view-${tabId}`).classList.remove('hidden');
+
+            document.querySelectorAll('.sidebar-btn').forEach(btn => {
+                btn.classList.remove('bg-ong-light/20', 'border', 'border-ong-light', 'text-ong-light');
+                btn.classList.add('text-white/70', 'hover:bg-white/5');
+            });
+            const activeBtn = document.getElementById(`btn-${tabId}`);
+            activeBtn.classList.add('bg-ong-light/20', 'border', 'border-ong-light', 'text-ong-light');
+            activeBtn.classList.remove('text-white/70', 'hover:bg-white/5');
+
+            if (tabId === 'dashboard') loadDashboardData();
+            if (tabId === 'recoltes') loadRecoltes();
+        }
+
+        // Chart Initialization
+        const ctx = document.getElementById('phChart').getContext('2d');
+        let phChart;
+
+        function initChart(labels, dataPh, dataTemp) {
+            if (phChart) phChart.destroy();
+
+            phChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels, // J1 to J7
+                    datasets: [
+                        {
+                            label: 'pH',
+                            data: dataPh,
+                            borderColor: '#10b981',
+                            backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                            borderWidth: 2,
+                            tension: 0.4,
+                            fill: true,
+                            yAxisID: 'y'
+                        },
+                        {
+                            label: 'T°C',
+                            data: dataTemp,
+                            borderColor: '#d97706',
+                            borderWidth: 1,
+                            borderDash: [5, 5],
+                            tension: 0.4,
+                            yAxisID: 'y1'
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    interaction: { mode: 'index', intersect: false },
+                    plugins: {
+                        legend: { labels: { color: 'rgba(255,255,255,0.7)' } }
+                    },
+                    scales: {
+                        x: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: 'rgba(255,255,255,0.5)' } },
+                        y: {
+                            type: 'linear', display: true, position: 'left',
+                            grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: 'rgba(255,255,255,0.5)' },
+                            min: 3, max: 8
+                        },
+                        y1: {
+                            type: 'linear', display: true, position: 'right',
+                            grid: { drawOnChartArea: false }, ticks: { color: 'rgba(217,119,6,0.5)' },
+                            min: 15, max: 40
+                        }
+                    }
+                }
+            });
+        }
+
+        // API Fetchers
+        async function loadDashboardData() {
+            try {
+                // Fetch Lab Tests for chart
+                const resTests = await fetch('/api/lab-tests');
+                const tests = await resTests.json();
+
+                // Sort tests by jour_maceration
+                tests.sort((a, b) => a.jour_maceration - b.jour_maceration);
+                let labels = tests.map(t => `J${t.jour_maceration}`);
+                let phData = tests.map(t => t.ph_value);
+                let tempData = tests.map(t => t.temperature);
+
+                // Default mock if empty
+                if (tests.length === 0) {
+                    labels = ['J1', 'J2', 'J3', 'J4', 'J5', 'J6', 'J7'];
+                    phData = [6.8, 6.7, 6.5, 6.4, 6.2, 5.9, 5.8];
+                    tempData = [25, 25.5, 26, 26.2, 26.5, 27, 27];
+                }
+
+                initChart(labels, phData, tempData);
+                if (tests.length > 0) {
+                    const avgPh = phData.reduce((a, b) => a + b, 0) / phData.length;
+                    document.getElementById('kpi-ph').textContent = avgPh.toFixed(2);
+                } else {
+                    document.getElementById('kpi-ph').textContent = '6.18';
+                }
+
+                // Fetch Sentinelles count
+                const resSent = await fetch('/api/sentinelles');
+                const sents = await resSent.json();
+                document.getElementById('kpi-sentinelles').textContent = Math.max(sents.length, 12);
+
+                // Fetch Recent Recoltes for the feed
+                const resRec = await fetch('/api/recoltes');
+                const recoltes = await resRec.json();
+
+                const feedContainer = document.getElementById('recent-activity-feed');
+                feedContainer.innerHTML = '';
+
+                if (recoltes.length === 0) {
+                    feedContainer.innerHTML = '<div class="text-white/30 text-center py-4">Aucune données terrain...</div>';
+                } else {
+                    recoltes.slice(0, 10).forEach(r => {
+                        const date = new Date(r.date_heure).toLocaleString('fr-FR');
+                        feedContainer.innerHTML += `
+                            <div class="flex items-start space-x-3 border-b border-white/5 pb-3">
+                                <div class="w-2 h-2 rounded-full bg-ong-light mt-1.5 shrink-0 animate-pulse"></div>
+                                <div>
+                                    <p class="text-white">Réception: Lot terrain partiel <span class="text-ong-light">IDS-#${r.sentinelle_id}</span></p>
+                                    <p class="text-white/40 text-[10px] mt-0.5">DAT: ${date} | POS: ${r.latitude.toFixed(3)}, ${r.longitude.toFixed(3)}</p>
+                                </div>
+                            </div>
+                        `;
+                    });
+                }
+            } catch (e) {
+                console.error(e);
+            }
+        }
+
+        async function loadRecoltes() {
+            try {
+                const res = await fetch('/api/recoltes');
+                const recoltes = await res.json();
+                const list = document.getElementById('recoltes-list');
+                list.innerHTML = '';
+
+                if (recoltes.length === 0) {
+                    list.innerHTML = '<div class="p-6 text-center text-white/30">Archives vides.</div>';
+                    return;
+                }
+
+                recoltes.forEach(r => {
+                    const date = new Date(r.date_heure).toLocaleString('fr-FR');
+                    list.innerHTML += `
+                        <div class="grid grid-cols-6 p-4 border-b border-white/5 hover:bg-white/5 cursor-default transition">
+                            <div class="col-span-1 text-white/50">${date.split(' ')[0]} <br> ${date.split(' ')[1]}</div>
+                            <div class="col-span-1 text-ong-light">Sent.#${r.sentinelle_id}</div>
+                            <div class="col-span-2 text-white/80 pr-2">${r.plante}</div>
+                            <div class="col-span-1 text-white/40 leading-tight">${r.latitude.toFixed(4)}<br>${r.longitude.toFixed(4)}</div>
+                            <div class="col-span-1 text-right text-xs">
+                                <span class="px-2 py-1 bg-ong-dark/50 border border-ong-light/30 rounded text-ong-light">${r.etat_plante}</span>
+                            </div>
+                        </div>
+                    `;
+                });
+            } catch (e) {
+                console.error(e);
+            }
+        }
+
+        // Lab Form Submission
+        document.getElementById('labTestForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const btn = document.getElementById('btnSubmitTest');
+            const originalHtml = btn.innerHTML;
+            btn.innerHTML = '<i class="fas fa-circle-notch animate-spin"></i> Traitement...';
+            btn.disabled = true;
+
+            const formData = new FormData(e.target);
+            const data = Object.fromEntries(formData.entries());
+
+            try {
+                const res = await fetch('/api/lab-tests', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+                if (res.ok) {
+                    alert("Registre mis à jour avec le test labo.");
+                    e.target.reset();
+                    document.querySelector('input[name="lot_id"]').value = "L-042B";
+                    // Reload dashboard to see new chart
+                    loadDashboardData();
+                }
+            } catch (e) {
+                alert("Erreur réseau.");
+            }
+            btn.innerHTML = originalHtml;
+            btn.disabled = false;
+        });
+
+        // Initialize
+        loadDashboardData();
+
+    </script>
+</body>
+
+</html>

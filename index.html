@@ -1,0 +1,1325 @@
+<!DOCTYPE html>
+<html lang="fr" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ONG CENTRE BEMBA TAGAÇIRA | Science & Tradition</title>
+    <meta name="description"
+        content="Concilier rigueur de laboratoire et profondeur de la médecine traditionnelle pour la protection de la vie. Spécialiste du Scoparia dulcis (Timitimi).">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Merriweather:ital,wght@0,400;0,700;1,400&display=swap"
+        rel="stylesheet">
+
+    <!-- Icons & Animations -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'ong-dark': '#064e3b',
+                        'ong-light': '#10b981',
+                        'ong-gold': '#d97706',
+                        'ong-white': '#f0fdf4',
+                    },
+                    fontFamily: {
+                        'serif': ['Merriweather', 'serif'],
+                        'sans': ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        :root {
+            --ong-dark: #064e3b;
+            --ong-light: #10b981;
+            --ong-gold: #d97706;
+            --ong-white: #f0fdf4;
+
+            /* Theme Variables - Default: Clairière */
+            --bg-page: #f0fdf4;
+            --bg-card: rgba(255, 255, 255, 0.7);
+            --text-main: #064e3b;
+            --text-muted: rgba(6, 78, 59, 0.7);
+            --header-bg: rgba(255, 255, 255, 0.7);
+        }
+
+        [data-theme="dark"] {
+            /* Mode Laboratoire */
+            --bg-page: #052e26;
+            --bg-card: rgba(6, 78, 59, 0.6);
+            --text-main: #f0fdf4;
+            --text-muted: rgba(240, 253, 244, 0.6);
+            --header-bg: rgba(5, 46, 38, 0.85);
+            --ong-white: #0a4d3f;
+        }
+
+        body {
+            background-color: var(--bg-page);
+            color: var(--text-main);
+            transition: background-color 0.5s ease, color 0.5s ease;
+            overflow-x: hidden;
+        }
+
+        .glass {
+            background: var(--header-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: background 0.5s ease;
+        }
+
+        .glass-dark {
+            background: rgba(6, 78, 59, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .hero-bg {
+            background: radial-gradient(circle at 50% 50%, #10b98122 0%, #064e3b05 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-bg::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image:
+                radial-gradient(circle at 2px 2px, #064e3b11 1px, transparent 0);
+            background-size: 40px 40px;
+            pointer-events: none;
+        }
+
+        .blob {
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            background: var(--ong-light);
+            filter: blur(80px);
+            opacity: 0.15;
+            z-index: -1;
+            animation: move 20s infinite alternate;
+        }
+
+        @keyframes move {
+            from {
+                transform: translate(-10%, -10%) rotate(0deg);
+            }
+
+            to {
+                transform: translate(20%, 20%) rotate(360deg);
+            }
+        }
+
+        .molecule-path {
+            stroke: var(--ong-gold);
+            stroke-width: 0.5;
+            fill: none;
+            opacity: 0.2;
+        }
+
+        .scroll-indicator {
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+
+            0%,
+            20%,
+            50%,
+            80%,
+            100% {
+                transform: translateY(0);
+            }
+
+            40% {
+                transform: translateY(-10px);
+            }
+
+            60% {
+                transform: translateY(-5px);
+            }
+        }
+
+        .timeline-line {
+            width: 2px;
+            background: var(--ong-gold);
+            position: absolute;
+            left: 1.25rem;
+            top: 0;
+            bottom: 0;
+        }
+
+        /* Hero Animation Styles */
+        #hero-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            opacity: 0.4;
+        }
+
+        .hero-gradient {
+            background: radial-gradient(circle at center, #0a4d3f 0%, #052e26 100%);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 10;
+        }
+
+        .btn-glass {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: white;
+            transition: all 0.3s ease;
+        }
+
+        .btn-glass:hover {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--ong-white);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--ong-dark);
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--ong-light);
+        }
+
+        .btn-gold {
+            background: var(--ong-gold);
+            color: white;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(217, 119, 6, 0.3);
+        }
+
+        .btn-gold:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(217, 119, 6, 0.5);
+            background: #b45309;
+        }
+
+        .btn-outline {
+            border: 2px solid var(--ong-dark);
+            color: var(--ong-dark);
+            transition: all 0.3s ease;
+        }
+
+        .btn-outline:hover {
+            background: var(--ong-dark);
+            color: white;
+        }
+
+        /* Preloader Styles */
+        #preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #052e26;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.8s ease, visibility 0.8s;
+        }
+
+        .loader-container {
+            position: relative;
+            width: 160px;
+            height: 160px;
+        }
+
+        .loader-logo {
+            width: 120px;
+            height: 120px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 2;
+            animation: pulse-logo 2s infinite ease-in-out;
+        }
+
+        .loader-ring {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            border: 2px solid rgba(217, 119, 6, 0.1);
+            border-top-color: var(--ong-gold);
+            animation: spin 1.5s linear infinite;
+        }
+
+        .loader-glow {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 140px;
+            height: 140px;
+            background: radial-gradient(circle, rgba(217, 119, 6, 0.2) 0%, transparent 70%);
+            border-radius: 50%;
+            animation: glow 2s infinite alternate;
+        }
+
+        @keyframes pulse-logo {
+
+            0%,
+            100% {
+                transform: translate(-50%, -50%) scale(0.95);
+                opacity: 0.8;
+            }
+
+            50% {
+                transform: translate(-50%, -50%) scale(1.05);
+                opacity: 1;
+            }
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        @keyframes glow {
+            from {
+                transform: translate(-50%, -50%) scale(0.8);
+                opacity: 0.3;
+            }
+
+            to {
+                transform: translate(-50%, -50%) scale(1.2);
+                opacity: 0.6;
+            }
+        }
+
+        #preloader.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        /* Theme Toggle Button */
+        .theme-toggle {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            border: 1px solid var(--border-color);
+            transition: all 0.3s ease;
+            background: var(--bg-card);
+            color: var(--ong-gold);
+        }
+
+        .theme-toggle:hover {
+            transform: rotate(15deg) scale(1.1);
+            box-shadow: 0 0 15px var(--ong-gold);
+        }
+
+        [data-theme="dark"] .section-light {
+            background-color: var(--bg-page);
+        }
+
+        [data-theme="dark"] .text-ong-dark {
+            color: var(--text-main);
+        }
+
+        [data-theme="dark"] .bg-white {
+            background-color: var(--bg-card);
+        }
+    </style>
+</head>
+
+<body class="font-sans">
+
+    <!-- PRELOADER -->
+    <div id="preloader">
+        <div class="loader-container">
+            <div class="loader-glow"></div>
+            <div class="loader-ring"></div>
+            <img src="assets/logo.png" alt="Logo Loading" class="loader-logo object-contain">
+        </div>
+        <div class="mt-8 text-center">
+            <p class="text-white/40 uppercase tracking-[0.5em] text-[10px] font-bold animate-pulse">Sagesse & Science
+            </p>
+            <div class="mt-2 h-1 w-48 bg-white/5 rounded-full overflow-hidden mx-auto">
+                <div id="loader-bar" class="h-full bg-ong-gold w-0 transition-all duration-300"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 1. HEADER -->
+    <header id="header" class="fixed top-0 left-0 right-0 z-50 transition-all duration-500 glass">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="#" class="flex items-center space-x-3">
+                <img src="assets/logo.png" alt="Logo CBeT" class="w-12 h-12 object-contain">
+                <span class="font-serif font-bold text-ong-dark text-lg md:text-xl tracking-tight uppercase">
+                    ONG CENTRE BEMBA TAGAÇIRA
+                </span>
+            </a>
+
+            <!-- Desktop Nav -->
+            <nav class="hidden lg:flex space-x-2 items-center text-[11px] font-bold uppercase tracking-wider">
+                <a href="#home"
+                    class="px-4 py-2 border border-ong-dark/10 hover:border-ong-gold hover:bg-ong-gold/5 rounded-full transition-all duration-300 whitespace-nowrap">
+                    Accueil
+                </a>
+                <a href="#about"
+                    class="px-4 py-2 border border-ong-dark/10 hover:border-ong-gold hover:bg-ong-gold/5 rounded-full transition-all duration-300 whitespace-nowrap">
+                    À Propos
+                </a>
+                <a href="#product"
+                    class="px-4 py-2 border border-ong-dark/10 hover:border-ong-gold hover:bg-ong-gold/5 rounded-full transition-all duration-300 whitespace-nowrap">
+                    Produit & Protocole
+                </a>
+                <a href="#charter"
+                    class="px-4 py-2 border border-ong-dark/10 hover:border-ong-gold hover:bg-ong-gold/5 rounded-full transition-all duration-300 whitespace-nowrap">
+                    Charte Sentinelle
+                </a>
+                <a href="#contact"
+                    class="px-4 py-2 border border-ong-dark/10 hover:border-ong-gold hover:bg-ong-gold/5 rounded-full transition-all duration-300 whitespace-nowrap">
+                    Contact
+                </a>
+
+                <!-- Theme Swtich -->
+                <button onclick="toggleTheme()" class="theme-toggle ml-4" id="themeToggleDesktop">
+                    <i class="fas fa-moon"></i>
+                </button>
+            </nav>
+
+            <!-- Mobile Menu Toggle -->
+            <div class="lg:hidden flex items-center space-x-4">
+                <button onclick="toggleTheme()" class="theme-toggle" id="themeToggleMobile">
+                    <i class="fas fa-moon"></i>
+                </button>
+                <button id="menuBtn" class="text-ong-dark text-2xl">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Mobile Menu Sidebar -->
+    <div id="mobileMenu"
+        class="fixed inset-0 z-50 bg-ong-dark text-white transform translate-x-full transition-transform duration-500 lg:hidden">
+        <div class="p-8 flex flex-col h-full">
+            <div class="flex justify-between items-center mb-12">
+                <span class="font-serif font-bold text-xl uppercase italic">Menu</span>
+                <button onclick="toggleMobileMenu()" class="text-3xl text-ong-light">&times;</button>
+            </div>
+            <nav class="flex flex-col space-y-6 text-2xl font-serif">
+                <a href="#home" onclick="toggleMobileMenu()">Accueil</a>
+                <a href="#about" onclick="toggleMobileMenu()">À Propos</a>
+                <a href="#product" onclick="toggleMobileMenu()">Produit & Protocole</a>
+                <a href="#charter" onclick="toggleMobileMenu()">Charte Sentinelle</a>
+                <a href="#contact" onclick="toggleMobileMenu()">Contact</a>
+            </nav>
+            <div class="mt-auto border-t border-ong-light/20 pt-8">
+                <p class="text-sm opacity-60">Abidjan, Côte d'Ivoire</p>
+                <p class="text-sm opacity-60">Science & Tradition</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 2. SECTION ACCUEIL (HERO) -->
+    <section id="home" class="min-h-screen pt-24 pb-20 hero-gradient flex items-center relative overflow-hidden">
+        <!-- Animated Background Canvas -->
+        <canvas id="hero-canvas"></canvas>
+
+        <div class="container mx-auto px-6 hero-content text-center">
+            <div data-aos="zoom-in" data-aos-duration="1200">
+                <!-- Official Logo Center -->
+                <div class="mb-10 inline-block relative">
+                    <div
+                        class="w-32 h-32 bg-white rounded-full flex items-center justify-center shadow-[0_0_50px_rgba(255,255,255,0.2)] border-4 border-[#d97706]/30 overflow-hidden p-2">
+                        <img src="assets/logo.png" alt="Logo Officiel CBeT" class="w-full h-full object-contain">
+                    </div>
+                </div>
+
+                <h1
+                    class="font-serif text-4xl md:text-6xl lg:text-7xl text-white leading-tight mb-8 max-w-5xl mx-auto font-bold">
+                    La science au service de la tradition,<br>
+                    <span class="text-[#d97706]">la tradition pour la protection de la vie.</span>
+                </h1>
+
+                <p class="text-lg md:text-xl text-white/70 mb-12 max-w-2xl mx-auto leading-relaxed font-medium">
+                    Concilier rigueur de laboratoire et profondeur de la médecine traditionnelle.
+                </p>
+
+                <div class="flex flex-col sm:flex-row gap-6 justify-center items-center">
+                    <a href="#charter"
+                        class="btn-gold px-10 py-5 rounded-[1.5rem] font-bold text-center min-w-[240px] flex items-center justify-center space-x-3 shadow-2xl">
+                        <i class="fas fa-medal"></i>
+                        <span>Devenir Sentinelle</span>
+                    </a>
+                    <a href="#contact"
+                        class="btn-glass px-10 py-5 rounded-[1.5rem] font-bold text-center min-w-[240px]">
+                        Contactez-nous
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Decorative element -->
+        <div class="absolute -top-10 -right-10 w-40 h-40 bg-ong-gold rounded-full opacity-10 animate-pulse blur-3xl">
+        </div>
+
+        <!-- Scroll Indicator -->
+        <a href="#about" class="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center group">
+            <span
+                class="text-[10px] uppercase font-bold tracking-[0.3em] mb-2 group-hover:text-ong-gold transition-colors">Découvrir</span>
+            <div class="w-6 h-10 border-2 border-white/30 rounded-full flex justify-center p-1">
+                <div class="w-1 h-2 bg-white/50 rounded-full scroll-indicator"></div>
+            </div>
+        </a>
+    </section>
+
+    <!-- 3. SECTION À PROPOS -->
+    <section id="about" class="py-24 bg-white relative overflow-hidden">
+        <div class="container mx-auto px-6">
+            <div class="text-center max-w-3xl mx-auto mb-20" data-aos="fade-up">
+                <h2 class="font-serif text-4xl text-ong-dark mb-6 tracking-tight">Nos Missions Principales</h2>
+                <div class="w-24 h-1 bg-ong-gold mx-auto mb-8"></div>
+                <p class="text-ong-dark/70 italic text-lg leading-relaxed">
+                    "Une vision novatrice pour la valorisation de la pharmacopée ivoirienne, encadrée par une démarche
+                    scientifique rigoureuse."
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-24">
+                <!-- Mission 1 -->
+                <div class="group p-10 rounded-3xl bg-ong-white border border-ong-dark/5 hover:border-ong-light/30 hover:shadow-xl transition-all duration-500"
+                    data-aos="fade-up" data-aos-delay="0">
+                    <div
+                        class="w-16 h-16 bg-ong-dark text-white rounded-2xl flex items-center justify-center mb-8 group-hover:bg-ong-light transition-colors duration-500">
+                        <i class="fas fa-flask-vial text-2xl"></i>
+                    </div>
+                    <h3 class="font-serif font-bold text-xl mb-4">Recherche & Développement</h3>
+                    <p class="text-sm text-ong-dark/70 leading-relaxed mb-6">
+                        Étude biochimique et microbiologique des plantes médicinales, notamment le Scoparia dulcis
+                        (Timitimi), pour en garantir l'efficacité et la sécurité sanitaire.
+                    </p>
+                    <ul class="text-xs space-y-2 font-bold text-ong-dark/80">
+                        <li class="flex items-center space-x-2">
+                            <i class="fas fa-check text-ong-light"></i>
+                            <span>Analyse microbiologique</span>
+                        </li>
+                        <li class="flex items-center space-x-2">
+                            <i class="fas fa-check text-ong-light"></i>
+                            <span>Biochimie des plantes</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Mission 2 -->
+                <div class="group p-10 rounded-3xl bg-ong-white border border-ong-dark/5 hover:border-ong-light/30 hover:shadow-xl transition-all duration-500"
+                    data-aos="fade-up" data-aos-delay="200">
+                    <div
+                        class="w-16 h-16 bg-ong-dark text-white rounded-2xl flex items-center justify-center mb-8 group-hover:bg-ong-light transition-colors duration-500">
+                        <i class="fas fa-clipboard-check text-2xl"></i>
+                    </div>
+                    <h3 class="font-serif font-bold text-xl mb-4">Standardisation</h3>
+                    <p class="text-sm text-ong-dark/70 leading-relaxed mb-6">
+                        Mise en place de normes de contrôle qualité strictes (pH, microbiote commensal, traçabilité)
+                        pour les préparations médicinales.
+                    </p>
+                    <ul class="text-xs space-y-2 font-bold text-ong-dark/80">
+                        <li class="flex items-center space-x-2">
+                            <i class="fas fa-check text-ong-light"></i>
+                            <span>Normes pH strictes</span>
+                        </li>
+                        <li class="flex items-center space-x-2">
+                            <i class="fas fa-check text-ong-light"></i>
+                            <span>Traçabilité complète</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Mission 3 -->
+                <div class="group p-10 rounded-3xl bg-ong-white border border-ong-dark/5 hover:border-ong-light/30 hover:shadow-xl transition-all duration-500"
+                    data-aos="fade-up" data-aos-delay="400">
+                    <div
+                        class="w-16 h-16 bg-ong-dark text-white rounded-2xl flex items-center justify-center mb-8 group-hover:bg-ong-light transition-colors duration-500">
+                        <i class="fas fa-users-rays text-2xl"></i>
+                    </div>
+                    <h3 class="font-serif font-bold text-xl mb-4">Transmission</h3>
+                    <p class="text-sm text-ong-dark/70 leading-relaxed mb-6">
+                        Formation d'une nouvelle génération de "Sentinelles" au respect des ressources naturelles et des
+                        protocoles d'hygiène.
+                    </p>
+                    <ul class="text-xs space-y-2 font-bold text-ong-dark/80">
+                        <li class="flex items-center space-x-2">
+                            <i class="fas fa-check text-ong-light"></i>
+                            <span>Formations certifiées</span>
+                        </li>
+                        <li class="flex items-center space-x-2">
+                            <i class="fas fa-check text-ong-light"></i>
+                            <span>Éthique herboriste</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- BLOC PRÉSIDENT -->
+            <div id="president-bloc" class="max-w-5xl mx-auto mt-32">
+                <div class="glass-dark p-8 md:p-12 rounded-[2rem] border-2 border-ong-gold/30 shadow-2xl relative overflow-hidden group"
+                    data-aos="zoom-in-up" data-aos-duration="1000">
+                    <div
+                        class="absolute -top-24 -right-24 w-64 h-64 bg-ong-gold/10 rounded-full blur-3xl transform scale-0 group-hover:scale-110 transition-transform duration-700">
+                    </div>
+
+                    <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                        <div class="lg:col-span-4 flex flex-col items-center" data-aos="fade-right"
+                            data-aos-delay="300">
+                            <div class="w-48 h-48 rounded-full border-4 border-ong-gold p-2 relative mb-6">
+                                <div
+                                    class="w-full h-full rounded-full bg-ong-light/20 flex items-center justify-center text-white text-6xl shadow-inner overflow-hidden">
+                                    <i class="fas fa-user-tie animate-pulse"></i>
+                                </div>
+                                <div
+                                    class="absolute bottom-0 right-2 w-12 h-12 bg-ong-gold rounded-full flex items-center justify-center border-4 border-ong-dark">
+                                    <i class="fas fa-award text-white text-xl"></i>
+                                </div>
+                            </div>
+                            <h4 class="font-serif font-bold text-2xl text-white text-center">Tounkara Al Foussein</h4>
+                            <p class="text-ong-gold font-bold uppercase tracking-[0.2em] text-xs">Président Fondateur
+                            </p>
+                        </div>
+
+                        <div class="lg:col-span-8" data-aos="fade-left" data-aos-delay="500">
+                            <i class="fas fa-quote-left text-ong-gold text-4xl mb-6 opacity-30"></i>
+                            <h5 class="text-ong-light font-bold text-xl mb-6 uppercase tracking-wider">Vision &
+                                Leadership</h5>
+                            <p class="text-white/80 leading-relaxed text-lg italic mb-8">
+                                "Fort d'une expertise en chimie alimentaire et contrôle qualité, et héritier de savoirs
+                                ethnobotaniques ancestraux, j'ai fondé ce centre pour concilier la rigueur des
+                                protocoles de laboratoire avec la profondeur de la médecine traditionnelle africaine.
+                                Nous valorisons le patrimoine végétal ivoirien par des méthodes contrôlées."
+                            </p>
+                            <div class="flex items-center space-x-6">
+                                <span class="h-[1px] w-12 bg-ong-gold animate-grow-x"></span>
+                                <p class="text-white text-sm font-bold opacity-60">Spécialiste en Chimie Alimentaire &
+                                    Ethnobotanique</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. SECTION PRODUIT & PROTOCOLE -->
+    <section id="product" class="py-24 bg-ong-white">
+        <div class="container mx-auto px-6">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-20 items-start">
+
+                <!-- Info Produit + Avertissements -->
+                <div data-aos="fade-right">
+                    <span class="text-ong-gold font-bold uppercase tracking-widest text-sm mb-4 block">Notice
+                        d'Usage</span>
+                    <h2 class="font-serif text-4xl text-ong-dark mb-10 leading-tight">Essence de Blindage Symbiotique
+                        <br><span class="text-ong-light font-sans text-2xl font-normal">(Formule 7 Plantes)</span>
+                    </h2>
+
+                    <p class="text-ong-dark/70 mb-10 leading-relaxed">
+                        Le processus de blindage suit une cinétique précise pour aligner votre propre microbiome avec
+                        l'essence du Centre Bemba Tagaçira.
+                    </p>
+
+                    <!-- Bloc Avertissement -->
+                    <div
+                        class="border-2 border-red-500/50 bg-red-50 p-8 rounded-2xl mb-12 relative overflow-hidden group">
+                        <div
+                            class="absolute -right-4 -top-4 text-6xl text-red-500/10 rotate-12 transition-transform group-hover:rotate-0">
+                            <i class="fas fa-exclamation-triangle"></i>
+                        </div>
+                        <h4 class="text-red-700 font-bold uppercase tracking-widest mb-6 flex items-center space-x-2">
+                            <i class="fas fa-shield-virus"></i>
+                            <span>Précautions & Sécurité</span>
+                        </h4>
+                        <ul class="space-y-4 text-sm text-red-900/80 font-medium">
+                            <li class="flex items-start space-x-3">
+                                <span class="mt-1 w-1.5 h-1.5 rounded-full bg-red-500 shrink-0"></span>
+                                <span><strong>Intégrité du Scellé :</strong> Ne pas utiliser si le sceau de cire ou le
+                                    bouchon est endommagé.</span>
+                            </li>
+                            <li class="flex items-start space-x-3">
+                                <span class="mt-1 w-1.5 h-1.5 rounded-full bg-red-500 shrink-0"></span>
+                                <span><strong>Conservation :</strong> Contient une flore vivante. Conservez au frais, à
+                                    l'abri du soleil direct.</span>
+                            </li>
+                            <li class="flex items-start space-x-3">
+                                <span class="mt-1 w-1.5 h-1.5 rounded-full bg-red-500 shrink-0"></span>
+                                <span><strong>Test Cutané :</strong> Faites un test sur le pli du coude 24h avant
+                                    l'usage. Attention au Timitimi.</span>
+                            </li>
+                            <li class="flex items-start space-x-3">
+                                <span class="mt-1 w-1.5 h-1.5 rounded-full bg-red-500 shrink-0"></span>
+                                <span><strong>Signes de Putréfaction :</strong> Si une odeur désagréable apparait,
+                                    rapportez le flacon au Centre.</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="flex items-center p-4 bg-ong-dark rounded-xl text-white space-x-4">
+                        <div class="w-10 h-10 rounded-full bg-ong-light flex items-center justify-center">
+                            <i class="fas fa-flask"></i>
+                        </div>
+                        <p class="text-xs font-bold leading-relaxed">
+                            "La science au service de la tradition, la tradition pour la protection de la vie."
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Protocole Timeline -->
+                <div data-aos="fade-left" data-aos-delay="200" class="relative pl-12 md:pl-20">
+                    <div class="timeline-line"></div>
+
+                    <h3 class="font-serif text-2xl mb-12 text-ong-dark">Protocole des 7 Nuits</h3>
+
+                    <div class="space-y-16">
+                        <!-- Step 1 -->
+                        <div class="relative">
+                            <div
+                                class="absolute -left-[3.1rem] md:-left-[3.6rem] w-10 h-10 bg-ong-dark border-4 border-ong-white rounded-full flex items-center justify-center text-ong-gold z-10">
+                                <span class="font-serif font-bold italic">1</span>
+                            </div>
+                            <h4 class="font-bold text-ong-dark text-xl mb-3 uppercase tracking-wider">L'Inoculation (La
+                                Clé Maîtresse)</h4>
+                            <p
+                                class="text-sm text-ong-dark/70 leading-relaxed italic border-l-4 border-ong-gold pl-4 py-2">
+                                "Le premier soir, ingérez une petite dose (environ 5 ml) de la préparation pure."
+                            </p>
+                            <p class="text-xs mt-3 text-ong-dark/60 font-semibold">
+                                Permet à votre système immunitaire de reconnaître la signature vibratoire du blindage.
+                            </p>
+                        </div>
+
+                        <!-- Step 2 -->
+                        <div class="relative">
+                            <div
+                                class="absolute -left-[3.1rem] md:-left-[3.6rem] w-10 h-10 bg-ong-dark border-4 border-ong-white rounded-full flex items-center justify-center text-ong-gold z-10">
+                                <span class="font-serif font-bold italic">2</span>
+                            </div>
+                            <h4 class="font-bold text-ong-dark text-xl mb-3 uppercase tracking-wider">L'Onction (Le
+                                Bain)</h4>
+                            <p class="text-sm text-ong-dark/70 leading-relaxed border-l-4 border-ong-light pl-4 py-2">
+                                Diluez une portion dans votre eau de rinçage. Versez de <span
+                                    class="font-bold underline">haut en bas</span> sans vous essuyer.
+                            </p>
+                            <p class="text-xs mt-3 text-ong-dark/60 font-semibold uppercase tracking-widest">Usage
+                                Externe Dominant</p>
+                        </div>
+
+                        <!-- Step 3 -->
+                        <div class="relative">
+                            <div
+                                class="absolute -left-[3.1rem] md:-left-[3.6rem] w-10 h-10 bg-ong-dark border-4 border-ong-white rounded-full flex items-center justify-center text-ong-gold z-10">
+                                <span class="font-serif font-bold italic">3</span>
+                            </div>
+                            <h4 class="font-bold text-ong-dark text-xl mb-3 uppercase tracking-wider">La Continuité</h4>
+                            <p class="text-sm text-ong-dark/70 leading-relaxed border-l-4 border-ong-dark pl-4 py-2">
+                                Répétez l'onction chaque soir durant le cycle complet pour renforcer la barrière entre
+                                vous et les influences extérieures.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="mt-20 p-6 glass rounded-2xl border-2 border-ong-light/20">
+                        <p class="text-xs leading-relaxed italic text-ong-dark/80">
+                            <strong>Note Spirituelle :</strong> Il est conseillé de maintenir une intention de clarté et
+                            de protection durant toute la durée du traitement. Entrez en résonance avec la lignée Bemba
+                            Tagaçira.
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+
+
+    <!-- 6. SECTION CHARTE SENTINELLE -->
+    <section id="charter" class="py-24 bg-ong-dark text-white relative overflow-hidden">
+        <div
+            class="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-transparent via-ong-gold to-transparent opacity-50">
+        </div>
+        <div class="container mx-auto px-6">
+            <div class="text-center max-w-4xl mx-auto mb-20" data-aos="fade-down">
+                <span class="text-ong-gold font-bold uppercase tracking-[0.4em] mb-4 block">Déclinaison d'Éthique</span>
+                <h2 class="font-serif text-4xl mb-6 leading-tight">Charte d'Éthique et de Qualité des <span
+                        class="italic text-ong-light underline decoration-ong-gold/30 underline-offset-8">Sentinelles</span>
+                </h2>
+                <p class="text-white/60 italic text-lg leading-relaxed">
+                    « La plante n'est pas qu'une simple ressource biologique, mais une entité vivante porteuse d'une
+                    mémoire et d'une force. Ma mission est de servir de pont entre la rigueur du laboratoire et la
+                    profondeur de la tradition. »
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-24">
+                <!-- Art 1 -->
+                <div class="bg-white/5 border border-white/10 p-8 rounded-2xl hover:bg-white/10 transition-colors"
+                    data-aos="flip-up" data-aos-delay="0">
+                    <span class="block text-ong-gold text-xs font-bold mb-4">Article 1</span>
+                    <h4 class="font-serif font-bold text-lg mb-4">Respect du Vivant</h4>
+                    <p class="text-[13px] text-white/60 leading-relaxed italic">
+                        "La Permission de Cueillette : Je m'engage à ne jamais prélever une plante sans avoir respecté
+                        les normes."
+                    </p>
+                </div>
+                <!-- Art 2 -->
+                <div class="bg-white/5 border border-white/10 p-8 rounded-2xl hover:bg-white/10 transition-colors"
+                    data-aos="flip-up" data-aos-delay="100">
+                    <span class="block text-ong-gold text-xs font-bold mb-4">Article 2</span>
+                    <h4 class="font-serif font-bold text-lg mb-4">Rigueur du Contrôleur</h4>
+                    <p class="text-[13px] text-white/60 leading-relaxed italic">
+                        "L'Hygiène Irréprochable : La négligence tue l'efficacité du remède. Respect du cycle de 7
+                        jours."
+                    </p>
+                </div>
+                <!-- Art 3 -->
+                <div class="bg-white/5 border border-white/10 p-8 rounded-2xl hover:bg-white/10 transition-colors"
+                    data-aos="flip-up" data-aos-delay="200">
+                    <span class="block text-ong-gold text-xs font-bold mb-4">Article 3</span>
+                    <h4 class="font-serif font-bold text-lg mb-4">Sceau du Secret</h4>
+                    <p class="text-[13px] text-white/60 leading-relaxed italic">
+                        "Protection du Savoir contre la biopiraterie. Aucun partage des verrouillages spirituels."
+                    </p>
+                </div>
+                <!-- Art 4 -->
+                <div class="bg-white/5 border border-white/10 p-8 rounded-2xl hover:bg-white/10 transition-colors"
+                    data-aos="flip-up" data-aos-delay="300">
+                    <span class="block text-ong-gold text-xs font-bold mb-4">Article 4</span>
+                    <h4 class="font-serif font-bold text-lg mb-4">Intégrité</h4>
+                    <p class="text-[13px] text-white/60 leading-relaxed italic">
+                        "Vérité et Transparence. Mon action vise uniquement le renforcement des globules de défense."
+                    </p>
+                </div>
+            </div>
+
+            <!-- Formulaire d'Engagement -->
+            <div id="engagement-form"
+                class="max-w-2xl mx-auto glass p-10 rounded-3xl border border-white/20 text-ong-dark"
+                data-aos="zoom-in">
+                <h3 class="font-serif text-2xl text-center mb-8 uppercase tracking-widest font-bold">Engagement Solennel
+                </h3>
+                <form onsubmit="handleCharterSubmit(event)" id="charterForm" class="space-y-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <input type="text" name="prenom" placeholder="Prénom" required
+                            class="bg-white/50 border border-ong-dark/10 p-4 rounded-xl focus:ring-2 focus:ring-ong-gold outline-none">
+                        <input type="text" name="nom" placeholder="Nom" required
+                            class="bg-white/50 border border-ong-dark/10 p-4 rounded-xl focus:ring-2 focus:ring-ong-gold outline-none">
+                    </div>
+                    <div class="space-y-4">
+                        <input type="email" name="email" placeholder="Adresse E-mail" required
+                            class="w-full bg-white/50 border border-ong-dark/10 p-4 rounded-xl focus:ring-2 focus:ring-ong-gold outline-none">
+                        <div class="grid grid-cols-3 gap-2">
+                            <select name="indicatif"
+                                class="bg-white/50 border border-ong-dark/10 p-4 rounded-xl focus:ring-2 focus:ring-ong-gold outline-none text-sm">
+                                <option value="+225">+225 (CI)</option>
+                                <option value="+33">+33 (FR)</option>
+                                <option value="+221">+221 (SN)</option>
+                                <option value="+226">+226 (BF)</option>
+                                <option value="+229">+229 (BJ)</option>
+                                <option value="+223">+223 (ML)</option>
+                            </select>
+                            <input type="tel" name="telephone" placeholder="Numéro de Téléphone" required
+                                class="col-span-2 bg-white/50 border border-ong-dark/10 p-4 rounded-xl focus:ring-2 focus:ring-ong-gold outline-none">
+                        </div>
+                    </div>
+                    <div class="flex items-start space-x-3 bg-ong-gold/10 p-4 rounded-xl">
+                        <input type="checkbox" id="acceptCharter" required class="mt-1 accent-ong-gold">
+                        <label for="acceptCharter" class="text-xs leading-relaxed italic">
+                            Je soussigné(e), accepte les termes de cette Charte et m'engage, par mon honneur et ma
+                            conscience, à agir en Sentinelle dévouée du Centre Bemba Tagaçira.
+                        </label>
+                    </div>
+                    <button type="submit" id="btnSigner"
+                        class="w-full btn-gold py-4 rounded-xl font-bold uppercase tracking-widest text-sm flex items-center justify-center space-x-2">
+                        <i class="fas fa-feather-pointed"></i>
+                        <span>Signer l'Engagement</span>
+                    </button>
+                    <div id="validationMsg"
+                        class="hidden text-center text-ong-dark font-serif italic text-sm py-4 border-2 border-dashed border-ong-gold rounded-xl animate-pulse">
+                        <i class="fas fa-check-circle text-ong-light mr-2"></i> Engagement validé. Bienvenue,
+                        Sentinelle.
+                    </div>
+                </form>
+                <p class="text-[10px] text-center mt-6 uppercase tracking-widest opacity-50">Fait à Abidjan, Côte
+                    d'Ivoire</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 7. SECTION CONTACT -->
+    <section id="contact" class="py-24 bg-[#f8fafb]">
+        <div class="container mx-auto px-6">
+            <!-- Header section -->
+            <div class="text-center mb-16" data-aos="fade-up">
+                <h2 class="font-serif text-[40px] text-[#064e3b] mb-4 font-bold">Contact & Partenariats</h2>
+                <div class="w-32 h-1 bg-[#d97706] mx-auto mb-6"></div>
+                <p class="text-[#64748b] text-[15px] font-medium uppercase tracking-wide">
+                    Destinataires : Responsables des Autorités Sanitaires / Partenaires de Développement
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-10">
+                <!-- Gauche : Colonne d'information -->
+                <div class="lg:col-span-5 space-y-6" data-aos="fade-right">
+                    <!-- Carte Siège avec Google Map -->
+                    <div
+                        class="bg-white rounded-2xl shadow-sm border-l-[6px] border-[#064e3b] overflow-hidden flex flex-col h-[320px]">
+                        <div class="p-6 pb-2">
+                            <h4 class="font-serif text-lg text-[#064e3b] font-bold">Siège Social</h4>
+                            <p class="text-[#64748b] text-xs font-medium">Abidjan, Côte d'Ivoire</p>
+                        </div>
+                        <div class="flex-grow w-full h-full grayscale hover:grayscale-0 transition-all duration-700">
+                            <iframe
+                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3972.8252033!2d-3.957388!3d5.3015488!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xfc1ec585c5b5f55%3A0x6e9a0e6336a7e58a!2sGrand%20Carrefour%20de%20Koumassi!5e0!3m2!1sfr!2sfr!4v1708560000000!5m2!1sfr!2sfr"
+                                width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"
+                                referrerpolicy="no-referrer-when-downgrade">
+                            </iframe>
+                        </div>
+                    </div>
+
+                    <!-- Carte Coordonnées (Sombre) -->
+                    <div class="bg-[#0b3d33] p-10 rounded-2xl shadow-lg relative overflow-hidden">
+                        <div class="absolute -right-4 -bottom-4 w-32 h-32 bg-white/5 rounded-full blur-2xl"></div>
+                        <h4 class="font-serif text-[#d97706] text-xl font-bold mb-8">Coordonnées Directes</h4>
+                        <div class="space-y-6 relative z-10">
+                            <div class="flex items-center space-x-4">
+                                <i class="fas fa-phone-alt text-[#d97706]"></i>
+                                <span class="text-white font-mono text-sm tracking-widest">+225 05 05 05 56 56</span>
+                            </div>
+                            <div class="flex items-center space-x-4">
+                                <i class="fas fa-envelope text-[#d97706]"></i>
+                                <span class="text-white font-mono text-sm tracking-widest">ongcbet@gmail.com</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Droite : Formulaire -->
+                <div class="lg:col-span-7" data-aos="fade-left">
+                    <div class="bg-white p-10 rounded-[2rem] shadow-[0_20px_50px_rgba(0,0,0,0.05)]">
+                        <h3 class="font-serif text-3xl text-[#064e3b] font-bold mb-4">Écrire à l'ONG</h3>
+                        <p class="text-[#64748b] text-sm mb-10 leading-relaxed font-medium">
+                            Pour toute demande d'information, partenariat ou signalement.
+                        </p>
+
+                        <form onsubmit="handleContactSubmit(event)" id="contactForm" class="space-y-6">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div class="space-y-2">
+                                    <label
+                                        class="text-[11px] text-[#2c3e50]/60 uppercase font-black tracking-widest">NOM</label>
+                                    <input type="text" name="nom" placeholder="Votre Nom" required
+                                        class="w-full bg-[#f8fafb] border border-[#e2e8f0] p-4 rounded-xl text-[#064e3b] outline-none focus:border-[#d97706]/50 transition-all font-medium">
+                                </div>
+                                <div class="space-y-2">
+                                    <label
+                                        class="text-[11px] text-[#2c3e50]/60 uppercase font-black tracking-widest">PRÉNOM</label>
+                                    <input type="text" name="prenom" placeholder="Votre Prénom" required
+                                        class="w-full bg-[#f8fafb] border border-[#e2e8f0] p-4 rounded-xl text-[#064e3b] outline-none focus:border-[#d97706]/50 transition-all font-medium">
+                                </div>
+                            </div>
+
+                            <div class="space-y-2">
+                                <label class="text-[11px] text-[#2c3e50]/60 uppercase font-black tracking-widest">EMAIL
+                                    PROFESSIONNEL</label>
+                                <input type="email" name="email" placeholder="exemple@domaine.com" required
+                                    class="w-full bg-[#f8fafb] border border-[#e2e8f0] p-4 rounded-xl text-[#064e3b] outline-none focus:border-[#d97706]/50 transition-all font-medium">
+                            </div>
+
+                            <div class="space-y-2">
+                                <label
+                                    class="text-[11px] text-[#2c3e50]/60 uppercase font-black tracking-widest">SUJET</label>
+                                <div class="relative">
+                                    <select name="sujet" required
+                                        class="w-full bg-[#f8fafb] border border-[#e2e8f0] p-4 rounded-xl text-[#064e3b] outline-none focus:border-[#d97706]/50 transition-all font-medium appearance-none">
+                                        <option value="" disabled selected>Choisir un sujet</option>
+                                        <option value="Partenariat">Partenariat Institutionnel</option>
+                                        <option value="Scientifique">Information Scientifique</option>
+                                        <option value="Signalement">Signalement / Qualité</option>
+                                        <option value="Presse">Espace Presse</option>
+                                    </select>
+                                    <i
+                                        class="fas fa-chevron-down absolute right-4 top-1/2 -translate-y-1/2 text-[#64748b] pointer-events-none"></i>
+                                </div>
+                            </div>
+
+                            <div class="space-y-2">
+                                <label
+                                    class="text-[11px] text-[#2c3e50]/60 uppercase font-black tracking-widest">MESSAGE</label>
+                                <textarea rows="4" name="message" placeholder="Votre message..." required
+                                    class="w-full bg-[#f8fafb] border border-[#e2e8f0] p-4 rounded-xl text-[#064e3b] outline-none focus:border-[#d97706]/50 transition-all font-medium resize-none"></textarea>
+                            </div>
+
+                            <button type="submit" id="btnContact"
+                                class="w-full bg-[#064e3b] text-white font-bold py-5 rounded-2xl hover:bg-[#d97706] transition-all duration-300 transform active:scale-[0.98] flex items-center justify-center space-x-3 shadow-lg group">
+                                <span class="uppercase tracking-[0.2em] text-sm">Transmettre la Requête</span>
+                                <i
+                                    class="fas fa-paper-plane group-hover:translate-x-2 group-hover:-translate-y-2 transition-transform"></i>
+                            </button>
+                            <p id="contactSent"
+                                class="hidden text-center text-[#d97706] font-bold italic animate-pulse pt-4">La requête
+                                a été transmise avec succès au secrétariat.</p>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 8. PIED DE PAGE (FOOTER) -->
+    <footer class="py-16 bg-ong-dark text-white border-t border-white/5">
+        <div class="container mx-auto px-6">
+            <div class="flex flex-col md:flex-row justify-between items-center mb-12 gap-8 text-center md:text-left">
+                <div>
+                    <div class="flex items-center justify-center md:justify-start space-x-4 mb-4">
+                        <img src="assets/logo.png" alt="Logo CBeT"
+                            class="w-10 h-10 object-contain filter brightness-0 invert opacity-80">
+                        <span class="font-serif font-bold text-xl uppercase tracking-widest text-white">ONG BEMBA
+                            TAGAÇIRA</span>
+                    </div>
+                    <p class="text-white/40 font-bold uppercase tracking-[0.3em] text-[10px]">Science & Tradition au
+                        Service de la Vie</p>
+                </div>
+
+                <div class="flex space-x-6 text-xl">
+                    <a href="#" class="hover:text-ong-gold transition-colors"><i class="fab fa-linkedin"></i></a>
+                    <a href="#" class="hover:text-ong-gold transition-colors"><i class="fab fa-facebook"></i></a>
+                    <a href="#" class="hover:text-ong-gold transition-colors"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+
+            <div class="border-t border-white/10 pt-12 flex flex-col md:flex-row justify-between items-center gap-6">
+                <p class="text-[10px] uppercase font-bold opacity-30">© 2026 ONG CENTRE BEMBA TAGAÇIRA. Tous droits
+                    réservés.</p>
+                <div class="flex space-x-8 text-[10px] uppercase font-bold tracking-widest opacity-30">
+                    <a href="#" class="hover:opacity-100 italic">Mention de Sécurité</a>
+                    <a href="#" class="hover:opacity-100 italic">Notice d'Usage</a>
+                    <a href="#" class="hover:opacity-100 italic">RGPD</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+
+
+    <!-- SCRIPTS -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        // Init AOS
+        AOS.init({
+            once: true,
+            mirror: false
+        });
+
+        // Hero Background Animation (Particles + Grid)
+        const canvas = document.getElementById('hero-canvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+
+        function initCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+
+        window.addEventListener('resize', initCanvas);
+        initCanvas();
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 3 + 1;
+                this.speedX = Math.random() * 1.5 - 0.75;
+                this.speedY = Math.random() * 1.5 - 0.75;
+                this.opacity = Math.random() * 0.6 + 0.2;
+            }
+
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+
+                if (this.x > canvas.width) this.x = 0;
+                else if (this.x < 0) this.x = canvas.width;
+                if (this.y > canvas.height) this.y = 0;
+                else if (this.y < 0) this.y = canvas.height;
+            }
+
+            draw() {
+                ctx.fillStyle = `rgba(16, 185, 129, ${this.opacity})`;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        function createParticles() {
+            particles = [];
+            let count = window.innerWidth < 768 ? 40 : 100;
+            for (let i = 0; i < count; i++) {
+                particles.push(new Particle());
+            }
+        }
+
+        function connect() {
+            let opacityValue = 1;
+            for (let a = 0; a < particles.length; a++) {
+                for (let b = a; b < particles.length; b++) {
+                    let distance = ((particles[a].x - particles[b].x) * (particles[a].x - particles[b].x))
+                        + ((particles[a].y - particles[b].y) * (particles[a].y - particles[b].y));
+                    if (distance < (canvas.width / 7) * (canvas.height / 7)) {
+                        opacityValue = 1 - (distance / 20000);
+                        ctx.strokeStyle = `rgba(16, 185, 129, ${opacityValue * 0.2})`;
+                        ctx.lineWidth = 1;
+                        ctx.beginPath();
+                        ctx.moveTo(particles[a].x, particles[a].y);
+                        ctx.lineTo(particles[b].x, particles[b].y);
+                        ctx.stroke();
+                    }
+                }
+            }
+        }
+
+        function animateHero() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Draw Grid
+            ctx.strokeStyle = 'rgba(16, 185, 129, 0.08)';
+            ctx.lineWidth = 1;
+            const step = 80;
+            for (let x = 0; x < canvas.width; x += step) {
+                ctx.beginPath();
+                ctx.moveTo(x, 0);
+                ctx.lineTo(x, canvas.height);
+                ctx.stroke();
+            }
+            for (let y = 0; y < canvas.height; y += step) {
+                ctx.beginPath();
+                ctx.moveTo(0, y);
+                ctx.lineTo(canvas.width, y);
+                ctx.stroke();
+            }
+
+            particles.forEach(p => {
+                p.update();
+                p.draw();
+            });
+            connect();
+            requestAnimationFrame(animateHero);
+        }
+
+        createParticles();
+        animateHero();
+
+        // Preloader Logic
+        window.addEventListener('load', () => {
+            const preloader = document.getElementById('preloader');
+            const loaderBar = document.getElementById('loader-bar');
+
+            // Simuler une progression pour l'effet visuel
+            let progress = 0;
+            const interval = setInterval(() => {
+                progress += 5;
+                if (loaderBar) loaderBar.style.width = `${progress}%`;
+
+                if (progress >= 100) {
+                    clearInterval(interval);
+                    setTimeout(() => {
+                        preloader.classList.add('hidden');
+                        document.body.style.overflow = 'auto';
+                    }, 500);
+                }
+            }, 50);
+        });
+
+        // Initialize state
+        document.body.style.overflow = 'hidden';
+
+        // Theme Toggle Logic
+        function toggleTheme() {
+            const html = document.documentElement;
+            const currentTheme = html.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+
+            html.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            updateThemeIcons(newTheme);
+        }
+
+        function updateThemeIcons(theme) {
+            const icons = document.querySelectorAll('.theme-toggle i');
+            icons.forEach(icon => {
+                if (theme === 'dark') {
+                    icon.classList.remove('fa-moon');
+                    icon.classList.add('fa-sun');
+                } else {
+                    icon.classList.remove('fa-sun');
+                    icon.classList.add('fa-moon');
+                }
+            });
+        }
+
+        // Apply saved theme on load
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        document.documentElement.setAttribute('data-theme', savedTheme);
+        updateThemeIcons(savedTheme);
+
+        // Sticky Header effect
+        window.addEventListener('scroll', () => {
+            const header = document.getElementById('header');
+            if (window.scrollY > 50) {
+                header.classList.add('shadow-xl', 'py-2');
+                header.classList.remove('py-4');
+            } else {
+                header.classList.remove('shadow-xl', 'py-2');
+                header.classList.add('py-4');
+            }
+        });
+
+        // Mobile Menu toggle
+        const menuBtn = document.getElementById('menuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+
+        menuBtn.addEventListener('click', toggleMobileMenu);
+
+        function toggleMobileMenu() {
+            mobileMenu.classList.toggle('translate-x-full');
+            document.body.classList.toggle('overflow-hidden');
+        }
+
+        // Form Handlers
+        async function handleCharterSubmit(e) {
+            e.preventDefault();
+            const btn = document.getElementById('btnSigner');
+            const msg = document.getElementById('validationMsg');
+            const originalHtml = btn.innerHTML;
+
+            btn.innerHTML = '<i class="fas fa-circle-notch animate-spin"></i> Enregistrement...';
+            btn.disabled = true;
+
+            const formData = new FormData(e.target);
+            const data = Object.fromEntries(formData.entries());
+            data.telephone = data.indicatif + data.telephone;
+
+            try {
+                const response = await fetch('/api/sentinelles', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+
+                if (response.ok) {
+                    btn.classList.add('hidden');
+                    msg.classList.remove('hidden');
+                    AOS.refresh();
+                } else {
+                    alert('Erreur: Impossible de signer la charte.');
+                    btn.innerHTML = originalHtml;
+                    btn.disabled = false;
+                }
+            } catch (error) {
+                alert('Erreur: Probleme de connexion au serveur.');
+                btn.innerHTML = originalHtml;
+                btn.disabled = false;
+            }
+        }
+
+        async function handleContactSubmit(e) {
+            e.preventDefault();
+            const btn = document.getElementById('btnContact');
+            const msg = document.getElementById('contactSent');
+            const originalHtml = btn.innerHTML;
+
+            btn.innerHTML = '<i class="fas fa-circle-notch animate-spin"></i> Envoi en cours...';
+            btn.disabled = true;
+
+            const formData = new FormData(e.target);
+            const data = Object.fromEntries(formData.entries());
+
+            try {
+                const response = await fetch('/api/contact', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+
+                if (response.ok) {
+                    btn.classList.add('hidden');
+                    msg.classList.remove('hidden');
+                    document.getElementById('contactForm').reset();
+                } else {
+                    alert("Erreur: Impossible d'envoyer le message.");
+                    btn.innerHTML = originalHtml;
+                    btn.disabled = false;
+                }
+            } catch (error) {
+                alert('Erreur: Probleme de connexion au serveur.');
+                btn.innerHTML = originalHtml;
+                btn.disabled = false;
+            }
+        }
+
+        // Smooth scroll adjustment for fixed header
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    const offset = 80; // height of header
+                    const bodyRect = document.body.getBoundingClientRect().top;
+                    const elementRect = target.getBoundingClientRect().top;
+                    const elementPosition = elementRect - bodyRect;
+                    const offsetPosition = elementPosition - offset;
+
+                    window.scrollTo({
+                        top: offsetPosition,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>
