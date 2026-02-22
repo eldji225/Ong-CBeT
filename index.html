@@ -386,81 +386,46 @@
 
     <!-- 1. HEADER -->
     <header id="header" class="fixed top-0 left-0 right-0 z-50 transition-all duration-500 glass">
-        <div class="container mx-auto px-4 md:px-6 py-3 md:py-4 flex justify-between items-center">
-            <a href="#" class="flex items-center space-x-2 md:space-x-3 min-w-0">
-                <img src="assets/Logo.png" alt="Logo CBeT" class="w-9 h-9 md:w-12 md:h-12 object-contain shrink-0">
+        <!-- Rangée 1 : Logo + Theme Toggle -->
+        <div class="container mx-auto px-4 md:px-6 py-2 md:py-3 flex justify-between items-center">
+            <a href="#home" class="flex items-center space-x-2 min-w-0">
+                <img src="assets/Logo.png" alt="Logo CBeT" class="w-8 h-8 md:w-11 md:h-11 object-contain shrink-0">
                 <span
-                    class="font-serif font-bold text-ong-dark text-xs sm:text-sm md:text-xl tracking-tight uppercase leading-tight">
+                    class="font-serif font-bold text-ong-dark text-[10px] sm:text-sm md:text-lg tracking-tight uppercase leading-tight">
                     <span class="hidden sm:inline">ONG CENTRE BEMBA TAGAÇIRA</span>
                     <span class="sm:hidden">ONG CBeT</span>
                 </span>
             </a>
-
-            <!-- Desktop Nav -->
-            <nav class="hidden lg:flex space-x-2 items-center text-[11px] font-bold uppercase tracking-wider">
-                <a href="#home"
-                    class="px-4 py-2 border border-ong-dark/10 hover:border-ong-gold hover:bg-ong-gold/5 rounded-full transition-all duration-300 whitespace-nowrap">
-                    Accueil
-                </a>
-                <a href="#about"
-                    class="px-4 py-2 border border-ong-dark/10 hover:border-ong-gold hover:bg-ong-gold/5 rounded-full transition-all duration-300 whitespace-nowrap">
-                    À Propos
-                </a>
-                <a href="#product"
-                    class="px-4 py-2 border border-ong-dark/10 hover:border-ong-gold hover:bg-ong-gold/5 rounded-full transition-all duration-300 whitespace-nowrap">
-                    Produit & Protocole
-                </a>
-                <a href="#charter"
-                    class="px-4 py-2 border border-ong-dark/10 hover:border-ong-gold hover:bg-ong-gold/5 rounded-full transition-all duration-300 whitespace-nowrap">
-                    Charte Sentinelle
-                </a>
-                <a href="#contact"
-                    class="px-4 py-2 border border-ong-dark/10 hover:border-ong-gold hover:bg-ong-gold/5 rounded-full transition-all duration-300 whitespace-nowrap">
-                    Contact
-                </a>
-
-                <!-- Theme Swtich -->
-                <button onclick="toggleTheme()" class="theme-toggle ml-4" id="themeToggleDesktop">
-                    <i class="fas fa-moon"></i>
-                </button>
-            </nav>
-
-            <!-- Mobile Menu Toggle -->
-            <div class="lg:hidden flex items-center space-x-4">
-                <button onclick="toggleTheme()" class="theme-toggle" id="themeToggleMobile">
-                    <i class="fas fa-moon"></i>
-                </button>
-                <button id="menuBtn" class="text-ong-dark text-2xl">
-                    <i class="fas fa-bars"></i>
-                </button>
-            </div>
+            <button onclick="toggleTheme()" class="theme-toggle" id="themeToggleDesktop">
+                <i class="fas fa-moon"></i>
+            </button>
         </div>
+
+        <!-- Rangée 2 : Navigation toujours visible, scrollable sur mobile -->
+        <nav class="border-t border-ong-dark/10 overflow-x-auto">
+            <div
+                class="flex items-center space-x-1 px-4 py-1 min-w-max lg:min-w-0 lg:justify-center text-[10px] sm:text-[11px] font-bold uppercase tracking-wider">
+                <a href="#home"
+                    class="px-3 py-2 border border-ong-dark/10 hover:border-ong-gold hover:bg-ong-gold/5 rounded-full transition-all duration-300 whitespace-nowrap">Accueil</a>
+                <a href="#about"
+                    class="px-3 py-2 border border-ong-dark/10 hover:border-ong-gold hover:bg-ong-gold/5 rounded-full transition-all duration-300 whitespace-nowrap">À
+                    Propos</a>
+                <a href="#product"
+                    class="px-3 py-2 border border-ong-dark/10 hover:border-ong-gold hover:bg-ong-gold/5 rounded-full transition-all duration-300 whitespace-nowrap">Produit
+                    &amp; Protocole</a>
+                <a href="#charter"
+                    class="px-3 py-2 border border-ong-dark/10 hover:border-ong-gold hover:bg-ong-gold/5 rounded-full transition-all duration-300 whitespace-nowrap">Charte
+                    Sentinelle</a>
+                <a href="#contact"
+                    class="px-3 py-2 border border-ong-dark/10 hover:border-ong-gold hover:bg-ong-gold/5 rounded-full transition-all duration-300 whitespace-nowrap">Contact</a>
+            </div>
+        </nav>
     </header>
 
-    <!-- Mobile Menu Sidebar -->
-    <div id="mobileMenu"
-        class="fixed inset-0 z-50 bg-ong-dark text-white transform translate-x-full transition-transform duration-500 lg:hidden">
-        <div class="p-8 flex flex-col h-full">
-            <div class="flex justify-between items-center mb-12">
-                <span class="font-serif font-bold text-xl uppercase italic">Menu</span>
-                <button onclick="toggleMobileMenu()" class="text-3xl text-ong-light">&times;</button>
-            </div>
-            <nav class="flex flex-col space-y-6 text-2xl font-serif">
-                <a href="#home" onclick="toggleMobileMenu()">Accueil</a>
-                <a href="#about" onclick="toggleMobileMenu()">À Propos</a>
-                <a href="#product" onclick="toggleMobileMenu()">Produit & Protocole</a>
-                <a href="#charter" onclick="toggleMobileMenu()">Charte Sentinelle</a>
-                <a href="#contact" onclick="toggleMobileMenu()">Contact</a>
-            </nav>
-            <div class="mt-auto border-t border-ong-light/20 pt-8">
-                <p class="text-sm opacity-60">Abidjan, Côte d'Ivoire</p>
-                <p class="text-sm opacity-60">Science & Tradition</p>
-            </div>
-        </div>
-    </div>
 
     <!-- 2. SECTION ACCUEIL (HERO) -->
-    <section id="home" class="min-h-screen pt-20 pb-16 hero-gradient flex items-center relative overflow-hidden">
+    <section id="home"
+        class="min-h-screen pt-28 md:pt-32 pb-16 hero-gradient flex items-center relative overflow-hidden">
         <!-- Animated Background Canvas -->
         <canvas id="hero-canvas"></canvas>
 
