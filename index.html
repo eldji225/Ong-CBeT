@@ -363,6 +363,57 @@
         [data-theme="dark"] .bg-white {
             background-color: var(--bg-card);
         }
+
+        /* === GLOBAL RESPONSIVE === */
+        * {
+            box-sizing: border-box;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        /* Inputs 100% width on mobile */
+        @media (max-width: 640px) {
+
+            input,
+            select,
+            textarea {
+                width: 100% !important;
+                font-size: 16px;
+                /* Prevents zoom on iOS */
+            }
+
+            .timeline-line {
+                left: 0.8rem;
+            }
+        }
+
+        /* Prevent text overflow everywhere */
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        p,
+        span,
+        a,
+        li {
+            word-break: break-word;
+            overflow-wrap: break-word;
+        }
+
+        /* Smooth scroll offset for fixed header */
+        html {
+            scroll-padding-top: 110px;
+        }
+
+        @media (min-width: 1024px) {
+            html {
+                scroll-padding-top: 80px;
+            }
+        }
     </style>
 </head>
 
@@ -503,7 +554,7 @@
                 <h2 class="font-serif text-2xl md:text-4xl text-ong-dark mb-6 tracking-tight">Nos Missions Principales
                 </h2>
                 <div class="w-24 h-1 bg-ong-gold mx-auto mb-8"></div>
-                <p class="text-ong-dark/70 italic text-lg leading-relaxed">
+                <p class="text-ong-dark/70 italic text-sm md:text-lg leading-relaxed px-2">
                     "Une vision novatrice pour la valorisation de la pharmacopée ivoirienne, encadrée par une démarche
                     scientifique rigoureuse."
                 </p>
@@ -594,7 +645,8 @@
                     <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 md:gap-12 items-center">
                         <div class="lg:col-span-4 flex flex-col items-center" data-aos="fade-right"
                             data-aos-delay="300">
-                            <div class="w-48 h-48 rounded-full border-4 border-ong-gold p-2 relative mb-6">
+                            <div
+                                class="w-36 h-36 md:w-48 md:h-48 rounded-full border-4 border-ong-gold p-2 relative mb-6">
                                 <div
                                     class="w-full h-full rounded-full bg-ong-light/20 flex items-center justify-center text-white text-6xl shadow-inner overflow-hidden">
                                     <i class="fas fa-user-tie animate-pulse"></i>
@@ -650,14 +702,14 @@
                             Plantes)</span>
                     </h2>
 
-                    <p class="text-ong-dark/70 mb-10 leading-relaxed">
+                    <p class="text-ong-dark/70 mb-6 md:mb-10 leading-relaxed text-sm md:text-base">
                         Le processus de blindage suit une cinétique précise pour aligner votre propre microbiome avec
                         l'essence du Centre Bemba Tagaçira.
                     </p>
 
                     <!-- Bloc Avertissement -->
                     <div
-                        class="border-2 border-red-500/50 bg-red-50 p-8 rounded-2xl mb-12 relative overflow-hidden group">
+                        class="border-2 border-red-500/50 bg-red-50 p-4 md:p-8 rounded-2xl mb-6 md:mb-12 relative overflow-hidden group">
                         <div
                             class="absolute -right-4 -top-4 text-6xl text-red-500/10 rotate-12 transition-transform group-hover:rotate-0">
                             <i class="fas fa-exclamation-triangle"></i>
@@ -704,17 +756,17 @@
                 <div data-aos="fade-left" data-aos-delay="200" class="relative pl-10 md:pl-20 mt-10 lg:mt-0">
                     <div class="timeline-line"></div>
 
-                    <h3 class="font-serif text-2xl mb-12 text-ong-dark">Protocole des 7 Nuits</h3>
+                    <h3 class="font-serif text-xl md:text-2xl mb-6 md:mb-12 text-ong-dark">Protocole des 7 Nuits</h3>
 
-                    <div class="space-y-16">
+                    <div class="space-y-10 md:space-y-16">
                         <!-- Step 1 -->
                         <div class="relative">
                             <div
                                 class="absolute -left-[3.1rem] md:-left-[3.6rem] w-10 h-10 bg-ong-dark border-4 border-ong-white rounded-full flex items-center justify-center text-ong-gold z-10">
                                 <span class="font-serif font-bold italic">1</span>
                             </div>
-                            <h4 class="font-bold text-ong-dark text-xl mb-3 uppercase tracking-wider">L'Inoculation (La
-                                Clé Maîtresse)</h4>
+                            <h4 class="font-bold text-ong-dark text-base md:text-xl mb-3 uppercase tracking-wider">
+                                L'Inoculation (La Clé Maîtresse)</h4>
                             <p
                                 class="text-sm text-ong-dark/70 leading-relaxed italic border-l-4 border-ong-gold pl-4 py-2">
                                 "Le premier soir, ingérez une petite dose (environ 5 ml) de la préparation pure."
@@ -730,8 +782,8 @@
                                 class="absolute -left-[3.1rem] md:-left-[3.6rem] w-10 h-10 bg-ong-dark border-4 border-ong-white rounded-full flex items-center justify-center text-ong-gold z-10">
                                 <span class="font-serif font-bold italic">2</span>
                             </div>
-                            <h4 class="font-bold text-ong-dark text-xl mb-3 uppercase tracking-wider">L'Onction (Le
-                                Bain)</h4>
+                            <h4 class="font-bold text-ong-dark text-base md:text-xl mb-3 uppercase tracking-wider">
+                                L'Onction (Le Bain)</h4>
                             <p class="text-sm text-ong-dark/70 leading-relaxed border-l-4 border-ong-light pl-4 py-2">
                                 Diluez une portion dans votre eau de rinçage. Versez de <span
                                     class="font-bold underline">haut en bas</span> sans vous essuyer.
@@ -746,7 +798,8 @@
                                 class="absolute -left-[3.1rem] md:-left-[3.6rem] w-10 h-10 bg-ong-dark border-4 border-ong-white rounded-full flex items-center justify-center text-ong-gold z-10">
                                 <span class="font-serif font-bold italic">3</span>
                             </div>
-                            <h4 class="font-bold text-ong-dark text-xl mb-3 uppercase tracking-wider">La Continuité</h4>
+                            <h4 class="font-bold text-ong-dark text-base md:text-xl mb-3 uppercase tracking-wider">La
+                                Continuité</h4>
                             <p class="text-sm text-ong-dark/70 leading-relaxed border-l-4 border-ong-dark pl-4 py-2">
                                 Répétez l'onction chaque soir durant le cycle complet pour renforcer la barrière entre
                                 vous et les influences extérieures.
@@ -754,7 +807,7 @@
                         </div>
                     </div>
 
-                    <div class="mt-20 p-6 glass rounded-2xl border-2 border-ong-light/20">
+                    <div class="mt-8 md:mt-20 p-4 md:p-6 glass rounded-2xl border-2 border-ong-light/20">
                         <p class="text-xs leading-relaxed italic text-ong-dark/80">
                             <strong>Note Spirituelle :</strong> Il est conseillé de maintenir une intention de clarté et
                             de protection durant toute la durée du traitement. Entrez en résonance avec la lignée Bemba
@@ -780,16 +833,15 @@
                 <h2 class="font-serif text-2xl md:text-4xl mb-6 leading-tight">Charte d'Éthique et de Qualité des <span
                         class="italic text-ong-light underline decoration-ong-gold/30 underline-offset-8">Sentinelles</span>
                 </h2>
-                <p class="text-white/60 italic text-lg leading-relaxed">
+                <p class="text-white/60 italic text-sm md:text-lg leading-relaxed px-2">
                     « La plante n'est pas qu'une simple ressource biologique, mais une entité vivante porteuse d'une
-                    mémoire et d'une force. Ma mission est de servir de pont entre la rigueur du laboratoire et la
-                    profondeur de la tradition. »
+                    mémoire et d'une force. »
                 </p>
             </div>
 
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 mb-12 md:mb-24">
                 <!-- Art 1 -->
-                <div class="bg-white/5 border border-white/10 p-8 rounded-2xl hover:bg-white/10 transition-colors"
+                <div class="bg-white/5 border border-white/10 p-5 md:p-8 rounded-2xl hover:bg-white/10 transition-colors"
                     data-aos="flip-up" data-aos-delay="0">
                     <span class="block text-ong-gold text-xs font-bold mb-4">Article 1</span>
                     <h4 class="font-serif font-bold text-lg mb-4">Respect du Vivant</h4>
@@ -799,7 +851,7 @@
                     </p>
                 </div>
                 <!-- Art 2 -->
-                <div class="bg-white/5 border border-white/10 p-8 rounded-2xl hover:bg-white/10 transition-colors"
+                <div class="bg-white/5 border border-white/10 p-5 md:p-8 rounded-2xl hover:bg-white/10 transition-colors"
                     data-aos="flip-up" data-aos-delay="100">
                     <span class="block text-ong-gold text-xs font-bold mb-4">Article 2</span>
                     <h4 class="font-serif font-bold text-lg mb-4">Rigueur du Contrôleur</h4>
@@ -809,7 +861,7 @@
                     </p>
                 </div>
                 <!-- Art 3 -->
-                <div class="bg-white/5 border border-white/10 p-8 rounded-2xl hover:bg-white/10 transition-colors"
+                <div class="bg-white/5 border border-white/10 p-5 md:p-8 rounded-2xl hover:bg-white/10 transition-colors"
                     data-aos="flip-up" data-aos-delay="200">
                     <span class="block text-ong-gold text-xs font-bold mb-4">Article 3</span>
                     <h4 class="font-serif font-bold text-lg mb-4">Sceau du Secret</h4>
@@ -818,7 +870,7 @@
                     </p>
                 </div>
                 <!-- Art 4 -->
-                <div class="bg-white/5 border border-white/10 p-8 rounded-2xl hover:bg-white/10 transition-colors"
+                <div class="bg-white/5 border border-white/10 p-5 md:p-8 rounded-2xl hover:bg-white/10 transition-colors"
                     data-aos="flip-up" data-aos-delay="300">
                     <span class="block text-ong-gold text-xs font-bold mb-4">Article 4</span>
                     <h4 class="font-serif font-bold text-lg mb-4">Intégrité</h4>
@@ -887,20 +939,20 @@
     <section id="contact" class="py-16 md:py-24 bg-[#f8fafb]">
         <div class="container mx-auto px-4 md:px-6">
             <!-- Header section -->
-            <div class="text-center mb-16" data-aos="fade-up">
+            <div class="text-center mb-8 md:mb-16" data-aos="fade-up">
                 <h2 class="font-serif text-2xl md:text-[40px] text-[#064e3b] mb-4 font-bold">Contact & Partenariats</h2>
                 <div class="w-32 h-1 bg-[#d97706] mx-auto mb-6"></div>
-                <p class="text-[#64748b] text-[15px] font-medium uppercase tracking-wide">
-                    Destinataires : Responsables des Autorités Sanitaires / Partenaires de Développement
+                <p class="text-[#64748b] text-xs md:text-[15px] font-medium uppercase tracking-wide px-4">
+                    Destinataires : Autorités Sanitaires / Partenaires
                 </p>
             </div>
 
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-10">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 md:gap-10">
                 <!-- Gauche : Colonne d'information -->
                 <div class="lg:col-span-5 space-y-6" data-aos="fade-right">
                     <!-- Carte Siège avec Google Map -->
                     <div
-                        class="bg-white rounded-2xl shadow-sm border-l-[6px] border-[#064e3b] overflow-hidden flex flex-col h-[320px]">
+                        class="bg-white rounded-2xl shadow-sm border-l-[6px] border-[#064e3b] overflow-hidden flex flex-col h-[240px] md:h-[320px]">
                         <div class="p-6 pb-2">
                             <h4 class="font-serif text-lg text-[#064e3b] font-bold">Siège Social</h4>
                             <p class="text-[#64748b] text-xs font-medium">Abidjan, Côte d'Ivoire</p>
@@ -915,17 +967,19 @@
                     </div>
 
                     <!-- Carte Coordonnées (Sombre) -->
-                    <div class="bg-[#0b3d33] p-10 rounded-2xl shadow-lg relative overflow-hidden">
+                    <div class="bg-[#0b3d33] p-6 md:p-10 rounded-2xl shadow-lg relative overflow-hidden">
                         <div class="absolute -right-4 -bottom-4 w-32 h-32 bg-white/5 rounded-full blur-2xl"></div>
-                        <h4 class="font-serif text-[#d97706] text-xl font-bold mb-8">Coordonnées Directes</h4>
+                        <h4 class="font-serif text-[#d97706] text-xl font-bold mb-4 md:mb-8">Coordonnées Directes</h4>
                         <div class="space-y-6 relative z-10">
                             <div class="flex items-center space-x-4">
                                 <i class="fas fa-phone-alt text-[#d97706]"></i>
-                                <span class="text-white font-mono text-sm tracking-widest">+225 05 05 05 56 56</span>
+                                <span class="text-white font-mono text-xs md:text-sm tracking-widest">+225 05 05 05 56
+                                    56</span>
                             </div>
                             <div class="flex items-center space-x-4">
                                 <i class="fas fa-envelope text-[#d97706]"></i>
-                                <span class="text-white font-mono text-sm tracking-widest">ongcbet@gmail.com</span>
+                                <span
+                                    class="text-white font-mono text-xs md:text-sm tracking-widest break-all">ongcbet@gmail.com</span>
                             </div>
                         </div>
                     </div>
@@ -933,9 +987,9 @@
 
                 <!-- Droite : Formulaire -->
                 <div class="lg:col-span-7" data-aos="fade-left">
-                    <div class="bg-white p-10 rounded-[2rem] shadow-[0_20px_50px_rgba(0,0,0,0.05)]">
-                        <h3 class="font-serif text-3xl text-[#064e3b] font-bold mb-4">Écrire à l'ONG</h3>
-                        <p class="text-[#64748b] text-sm mb-10 leading-relaxed font-medium">
+                    <div class="bg-white p-5 md:p-10 rounded-[2rem] shadow-[0_20px_50px_rgba(0,0,0,0.05)]">
+                        <h3 class="font-serif text-xl md:text-3xl text-[#064e3b] font-bold mb-4">Écrire à l'ONG</h3>
+                        <p class="text-[#64748b] text-sm mb-6 md:mb-10 leading-relaxed font-medium">
                             Pour toute demande d'information, partenariat ou signalement.
                         </p>
 
@@ -1003,15 +1057,16 @@
     </section>
 
     <!-- 8. PIED DE PAGE (FOOTER) -->
-    <footer class="py-16 bg-ong-dark text-white border-t border-white/5">
-        <div class="container mx-auto px-6">
-            <div class="flex flex-col md:flex-row justify-between items-center mb-12 gap-8 text-center md:text-left">
+    <footer class="py-10 md:py-16 bg-ong-dark text-white border-t border-white/5">
+        <div class="container mx-auto px-4 md:px-6">
+            <div
+                class="flex flex-col md:flex-row justify-between items-center mb-8 md:mb-12 gap-6 text-center md:text-left">
                 <div>
                     <div class="flex items-center justify-center md:justify-start space-x-4 mb-4">
                         <img src="assets/Logo.png" alt="Logo CBeT"
                             class="w-10 h-10 object-contain filter brightness-0 invert opacity-80">
-                        <span class="font-serif font-bold text-xl uppercase tracking-widest text-white">ONG BEMBA
-                            TAGAÇIRA</span>
+                        <span class="font-serif font-bold text-base md:text-xl uppercase tracking-widest text-white">ONG
+                            BEMBA TAGAÇIRA</span>
                     </div>
                     <p class="text-white/40 font-bold uppercase tracking-[0.3em] text-[10px]">Science & Tradition au
                         Service de la Vie</p>
@@ -1024,10 +1079,12 @@
                 </div>
             </div>
 
-            <div class="border-t border-white/10 pt-12 flex flex-col md:flex-row justify-between items-center gap-6">
+            <div
+                class="border-t border-white/10 pt-6 md:pt-12 flex flex-col md:flex-row justify-between items-center gap-4 md:gap-6">
                 <p class="text-[10px] uppercase font-bold opacity-30">© 2026 ONG CENTRE BEMBA TAGAÇIRA. Tous droits
                     réservés.</p>
-                <div class="flex space-x-8 text-[10px] uppercase font-bold tracking-widest opacity-30">
+                <div
+                    class="flex flex-wrap justify-center gap-4 md:gap-8 text-[10px] uppercase font-bold tracking-widest opacity-30">
                     <a href="#" class="hover:opacity-100 italic">Mention de Sécurité</a>
                     <a href="#" class="hover:opacity-100 italic">Notice d'Usage</a>
                     <a href="#" class="hover:opacity-100 italic">RGPD</a>
