@@ -2,7 +2,11 @@
     "version": 2,
     "rewrites": [
         {
-            "source": "/(.*)",
+            "source": "/api/(.*)",
+            "destination": "/server.js"
+        },
+        {
+            "source": "/dashboard.html",
             "destination": "/server.js"
         }
     ]
