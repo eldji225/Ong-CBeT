@@ -6,14 +6,6 @@
             "destination": "/server.js"
         },
         {
-            "source": "/dashboard.html",
-            "destination": "/server.js"
-        },
-        {
-            "source": "/terminal.html",
-            "destination": "/server.js"
-        },
-        {
             "source": "/assets/(.*)",
             "destination": "/server.js"
         },
